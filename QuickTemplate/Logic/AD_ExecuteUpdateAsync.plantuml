@@ -1,0 +1,18 @@
+@startuml ExecuteUpdateAsync
+skinparam {
+    monoChrome false
+    rectangleRoundCorner 15
+    rectangleBackgroundColor #smokewithe
+}
+
+rectangle "TEntity ExecuteUpdateAsync(TEntity entity)" { 
+    start
+    :ValidateEntity(entity);
+    :BeforeActionExecute(Update, entity);
+    :BeforeExecuteUpdate(entity);
+    :EntitySet.Update(entity);
+    :AfterExecuteUpdate(entity);
+    :AfterActionExecute(Update, entity);
+    stop
+}
+@enduml

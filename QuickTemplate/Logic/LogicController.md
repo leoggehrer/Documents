@@ -12,136 +12,42 @@ Ein Kontroller
 
 Im Kontroller
 
-## Insert-Opertaion
+## Insert-Operation
 
 ### Sequence diagram (SD) "TEntity InsertAsync(TEntity entity)"
 
-![your-UML-diagram-name](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/plantuml-markdown/main/example.plantuml
-)
-
-![Test](https://raw.githubusercontent.com/leoggehrer/CSHtlLeoTemplate-QuickTemplate/dd093bcb545ad6c5d2d3bdc28c06dde705e5bb0f/AspMvcDefaultSharedViews-Index.png)
-
-```plantuml
-@startuml Controller Insert Part 1
-skinparam {
-    monochrome false
-    sequenceArrowThickness 2
-    maxmessagesize 60
-}
-
-title Ablauf Insert-Operation
-
-'deklaration
-actor client
-participant "InsertAsync\n(entity)" as insert
-participant "Check-\nAuthorizationAsync\n(type, actionName)" as checkauth
-participant "Execute-\nInsertAsync\n(entity)" as execute
-participant "BeforeReturn\n(entity)" as beforeret
-participant "ValidateEntity\n(actionType, entity)" as validate
-participant "Before-\nActionExecute\n(actionType, entity)" as beforeaction
-participant "Before-\nExecuteInsert\n(entity)" as beforeinsert
-participant "EntitySet\n.AddAsync\n(entity)" as add
-participant "After-\nExecuteInsert\n(entity)" as afterinsert
-participant "After-\nActionExecute\n(actionType, entity)" as afteraction
-'declaration
-
-client -> insert : entity
-activate insert
-alt if (ACCOUNT_ON)
-insert -> checkauth : type, "InsertAsync"
-activate checkauth
-note right: Optional: Aufruf nur wenn ACCOUNT_ON ist
-return
-end
-insert -> execute : entity
-activate execute
-
-'Beginn: Ablauf ExecuteInsert(...)
-execute -> validate : Insert, entity
-activate validate
-return
-
-execute -> beforeaction : Insert, entity
-activate beforeaction
-return
-
-execute -> beforeinsert : entity
-activate beforeinsert
-return
-
-execute -> add : entity
-activate add
-return
-
-execute -> afterinsert : entity
-activate afterinsert
-return
-
-execute -> afteraction : Insert, entity
-activate afteraction
-return
-
-'Ende: Ablauf ExecuteInsert(...)
-execute --> insert : result
-deactivate execute
-
-insert -> beforeret : result
-activate beforeret
-return result
-insert --> client : result
-deactivate insert
-@enduml
-```
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/SD_InsertAsync.plantuml)
 
 ### Activity diagram (AD) "TEntity InsertAsync(TEntity entity)"
 
-```plantuml
-@startuml
-skinparam {
-    monoChrome false
-    rectangleRoundCorner 15
-    rectangleBackgroundColor #smokewithe
-}
-
-rectangle "TEntity InsertAsync(TEntity entity)" { 
-    start
-    if (ACCOUNT_ON?) then (yes)
-    :CheckAuthorizationAsync(Insert, entity);
-    else (no)
-    endif
-    :result = ExecuteInsertAsync(entity);
-    :return BeforeReturn(result);
-    stop
-}
-@enduml
-```
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_InsertAsync.plantuml)
 
 > HINWEIS:
 > Ist die Direktive ***ACCOUNT_ON*** definiert, dann wird die Benutzerberechtigung geprueft.
 
 #### Activity diagram (AD) "TEntity ExecuteInsertAsync(TEntity entity)"
 
-```plantuml
-@startuml
-skinparam {
-    monoChrome false
-    rectangleRoundCorner 15
-    rectangleBackgroundColor #smokewithe
-}
-
-rectangle "TEntity ExecuteInsertAsync(TEntity entity)" { 
-    start
-    :ValidateEntity(entity);
-    :BeforeActionExecute(Insert, entity);
-    :BeforeExecuteInsert(entity);
-    :EntitySet.AddAsync(entity);
-    :AfterExecuteInsert(entity);
-    :AfterActionExecute(Insert, entity);
-    stop
-}
-@enduml
-```
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_ExecuteInsertAsync.plantuml)
 
 > Hinweis:  
 > Alle angefuerten Methoden sind mit ***virtual*** spezifiziert und koennen in der Unterklasse angepasst (ueberschrieben ***override***) werden.
 
+## Update-Operation
+
+### Sequence diagram (SD) "TEntity UpdateAsync(TEntity entity)"
+
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/SD_UpdateAsync.plantuml)
+
+### Activity diagram (AD) "TEntity UpdateAsync(TEntity entity)"
+
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_UpdateAsync.plantuml)
+
+> HINWEIS:
+> Ist die Direktive ***ACCOUNT_ON*** definiert, dann wird die Benutzerberechtigung geprueft.
+
+#### Activity diagram (AD) "TEntity ExecuteUpdateAsync(TEntity entity)"
+
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_ExecuteUpdateAsync.plantuml)
+
+> Hinweis:  
+> Alle angefuerten Methoden sind mit ***virtual*** spezifiziert und koennen in der Unterklasse angepasst (ueberschrieben ***override***) werden.

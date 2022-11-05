@@ -1,0 +1,69 @@
+@startuml UpdateAsync
+skinparam {
+    monochrome false
+    sequenceArrowThickness 2
+    maxmessagesize 60
+}
+
+title Ablauf Update-Operation
+
+'deklaration
+actor client
+participant "UpdateAsync\n(entity)" as Update
+participant "Check-\nAuthorizationAsync\n(type, actionName)" as checkauth
+participant "Execute-\nUpdateAsync\n(entity)" as execute
+participant "BeforeReturn\n(entity)" as beforeret
+participant "ValidateEntity\n(actionType, entity)" as validate
+participant "Before-\nActionExecute\n(actionType, entity)" as beforeaction
+participant "Before-\nExecuteUpdate\n(entity)" as beforeUpdate
+participant "EntitySet\n.Update\n(entity)" as add
+participant "After-\nExecuteUpdate\n(entity)" as afterUpdate
+participant "After-\nActionExecute\n(actionType, entity)" as afteraction
+'declaration
+
+client -> Update : entity
+activate Update
+alt if (ACCOUNT_ON)
+Update -> checkauth : type, "UpdateAsync"
+activate checkauth
+note right: Optional: Aufruf nur wenn ACCOUNT_ON ist
+return
+end
+Update -> execute : entity
+activate execute
+
+'Beginn: Ablauf ExecuteUpdate(...)
+execute -> validate : Update, entity
+activate validate
+return
+
+execute -> beforeaction : Update, entity
+activate beforeaction
+return
+
+execute -> beforeUpdate : entity
+activate beforeUpdate
+return
+
+execute -> add : entity
+activate add
+return
+
+execute -> afterUpdate : entity
+activate afterUpdate
+return
+
+execute -> afteraction : Update, entity
+activate afteraction
+return
+
+'Ende: Ablauf ExecuteUpdate(...)
+execute --> Update : result
+deactivate execute
+
+Update -> beforeret : result
+activate beforeret
+return result
+Update --> client : result
+deactivate Update
+@enduml

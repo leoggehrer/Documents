@@ -1,18 +1,19 @@
-@startuml InsertAsync
+@startuml UpdateAsync
 skinparam {
     monoChrome false
     rectangleRoundCorner 15
     rectangleBackgroundColor #smokewithe
 }
 
-rectangle "TEntity InsertAsync(TEntity entity)" { 
+rectangle "TEntity UpdateAsync(TEntity entity)" { 
     start
     if (ACCOUNT_ON?) then (yes)
-        :CheckAuthorizationAsync(Insert, entity);
+        :CheckAuthorizationAsync(Update, entity);
     else (no)
     endif
-    :result = ExecuteInsertAsync(entity);
+    :result = ExecuteUpdateAsync(entity);
     :return BeforeReturn(result);
     stop
 }
 @enduml
+Update
