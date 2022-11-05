@@ -1,0 +1,18 @@
+@startuml InsertAsync
+skinparam {
+    monoChrome false
+    rectangleRoundCorner 15
+    rectangleBackgroundColor #smokewithe
+}
+
+rectangle "TEntity InsertAsync(TEntity entity)" { 
+    start
+    if (ACCOUNT_ON?) then (yes)
+    :CheckAuthorizationAsync(Insert, entity);
+    else (no)
+    endif
+    :result = ExecuteInsertAsync(entity);
+    :return BeforeReturn(result);
+    stop
+}
+@enduml

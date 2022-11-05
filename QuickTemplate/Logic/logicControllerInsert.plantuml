@@ -1,0 +1,16 @@
+@startuml Controller InterfaceStereotypeFontColor
+actor client
+client -> "InsertAsync(entity)"
+"InsertAsync(entity)" ->  "CheckAuthorizationAsync(type, action)": type, "InsertAsync"
+"InsertAsync(entity)" -> "ExecuteInsertAsync(entity)": entity
+
+"ExecuteInsertAsync(entity)" -> "ValidateEntity(entity)": entity
+"ExecuteInsertAsync(entity)" -> "BeforeActionExecute(actionType, entity)": insert, entity
+"ExecuteInsertAsync(entity)" -> "BeforeExecuteInsert(entity)": entity
+"ExecuteInsertAsync(entity)" -> "EntitySet.AddAsync(entity)": entity
+"ExecuteInsertAsync(entity)" -> "AfterExecuteInsert(actionType, entity)": entity
+"ExecuteInsertAsync(entity)" -> "AfterActionExecute(actionType, entity)": insert, entity
+
+"ExecuteInsertAsync(entity)" -> "InsertAsync(entity)": entity
+"InsertAsync(entity)" -> client
+@enduml

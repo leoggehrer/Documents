@@ -1,0 +1,69 @@
+@startuml InsertAsync
+skinparam {
+    monochrome false
+    sequenceArrowThickness 2
+    maxmessagesize 60
+}
+
+title Ablauf Insert-Operation
+
+'deklaration
+actor client
+participant "InsertAsync\n(entity)" as insert
+participant "Check-\nAuthorizationAsync\n(type, actionName)" as checkauth
+participant "Execute-\nInsertAsync\n(entity)" as execute
+participant "BeforeReturn\n(entity)" as beforeret
+participant "ValidateEntity\n(actionType, entity)" as validate
+participant "Before-\nActionExecute\n(actionType, entity)" as beforeaction
+participant "Before-\nExecuteInsert\n(entity)" as beforeinsert
+participant "EntitySet\n.AddAsync\n(entity)" as add
+participant "After-\nExecuteInsert\n(entity)" as afterinsert
+participant "After-\nActionExecute\n(actionType, entity)" as afteraction
+'declaration
+
+client -> insert : entity
+activate insert
+alt if (ACCOUNT_ON)
+insert -> checkauth : type, "InsertAsync"
+activate checkauth
+note right: Optional: Aufruf nur wenn ACCOUNT_ON ist
+return
+end
+insert -> execute : entity
+activate execute
+
+'Beginn: Ablauf ExecuteInsert(...)
+execute -> validate : Insert, entity
+activate validate
+return
+
+execute -> beforeaction : Insert, entity
+activate beforeaction
+return
+
+execute -> beforeinsert : entity
+activate beforeinsert
+return
+
+execute -> add : entity
+activate add
+return
+
+execute -> afterinsert : entity
+activate afterinsert
+return
+
+execute -> afteraction : Insert, entity
+activate afteraction
+return
+
+'Ende: Ablauf ExecuteInsert(...)
+execute --> insert : result
+deactivate execute
+
+insert -> beforeret : result
+activate beforeret
+return result
+insert --> client : result
+deactivate insert
+@enduml

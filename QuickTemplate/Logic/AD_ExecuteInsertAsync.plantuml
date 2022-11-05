@@ -1,0 +1,18 @@
+@startuml ExecuteInsertAsync
+skinparam {
+    monoChrome false
+    rectangleRoundCorner 15
+    rectangleBackgroundColor #smokewithe
+}
+
+rectangle "TEntity ExecuteInsertAsync(TEntity entity)" { 
+    start
+    :ValidateEntity(entity);
+    :BeforeActionExecute(Insert, entity);
+    :BeforeExecuteInsert(entity);
+    :EntitySet.AddAsync(entity);
+    :AfterExecuteInsert(entity);
+    :AfterActionExecute(Insert, entity);
+    stop
+}
+@enduml
