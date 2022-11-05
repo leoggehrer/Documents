@@ -1,0 +1,60 @@
+@startuml SaveChangesAsync
+skinparam {
+    monochrome false
+    sequenceArrowThickness 2
+    maxmessagesize 60
+}
+
+title Ablauf SaveChanges-Operation
+
+'deklaration
+actor client
+participant "SaveChangesAsync\n(entity)" as SaveChanges
+participant "Check-\nAuthorizationAsync\n(type, actionName)" as checkauth
+participant "Execute-\nSaveChangesAsync()" as execute
+participant "Before-\nActionExecute\n(actionType)" as beforeaction
+participant "Before-\nExecuteSaveChanges()" as beforeSaveChanges
+participant "Context\n.SaveChangesAsync()" as savechanges
+participant "After-\nExecuteSaveChanges()" as afterSaveChanges
+participant "After-\nActionExecute\n(actionType)" as afteraction
+'declaration
+
+client -> SaveChanges : entity
+activate SaveChanges
+alt if (ACCOUNT_ON)
+    SaveChanges -> checkauth : type, "SaveChangesAsync"
+    activate checkauth
+    note right: Optional: Aufruf nur wenn ACCOUNT_ON ist
+    return
+end
+SaveChanges -> execute
+activate execute
+
+'Beginn: Ablauf ExecuteSaveChanges(...)
+execute -> beforeaction : SaveChanges
+activate beforeaction
+return
+
+execute -> beforeSaveChanges
+activate beforeSaveChanges
+return
+
+execute -> savechanges
+activate savechanges
+return count
+
+execute -> afterSaveChanges
+activate afterSaveChanges
+return
+
+execute -> afteraction : SaveChanges
+activate afteraction
+return
+
+'Ende: Ablauf ExecuteSaveChanges(...)
+execute --> SaveChanges : count
+deactivate execute
+
+SaveChanges --> client : count
+deactivate SaveChanges
+@enduml

@@ -1,0 +1,18 @@
+@startuml ExecuteSaveChangesAsync
+skinparam {
+    monoChrome false
+    rectangleRoundCorner 15
+    rectangleBackgroundColor #smokewithe
+}
+
+rectangle "void ExecuteSaveChangesAsync()" { 
+    start
+    :BeforeActionExecute(SaveChanges);
+    :BeforeExecuteSaveChanges();
+    :count = Context.SaveChangesAsync();
+    :AfterExecuteSaveChanges();
+    :AfterActionExecute(SaveChanges);
+    :return count;
+    stop
+}
+@enduml

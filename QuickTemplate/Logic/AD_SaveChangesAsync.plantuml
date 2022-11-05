@@ -1,0 +1,18 @@
+@startuml SaveChangesAsync
+skinparam {
+    monoChrome false
+    rectangleRoundCorner 15
+    rectangleBackgroundColor #smokewithe
+}
+
+rectangle "int SaveChangesAsync()" { 
+    start
+    if (ACCOUNT_ON?) then (yes)
+        :CheckAuthorizationAsync(type, "SaveChangesAsync");
+    else (no)
+    endif
+    :count = ExecuteSaveChangesAsync();
+    :return count;
+    stop
+}
+@enduml

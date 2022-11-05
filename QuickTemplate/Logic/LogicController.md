@@ -71,3 +71,23 @@ Im Kontroller
 
 > Hinweis:  
 > Alle angefuerten Methoden sind mit ***virtual*** spezifiziert und koennen in der Unterklasse angepasst (ueberschrieben ***override***) werden.
+
+## SaveChanges-Operation
+
+### Sequence diagram (SD) "int SaveChangesAsync()"
+
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/SD_SaveChangesAsync.plantuml)
+
+### Activity diagram (AD) "int SaveChangesAsync()"
+
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_SaveChangesAsync.plantuml)
+
+> HINWEIS:
+> Ist die Direktive ***ACCOUNT_ON*** definiert, dann wird die Benutzerberechtigung geprueft.
+
+#### Activity diagram (AD) "int ExecuteSaveChangesAsync()"
+
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_ExecuteSaveChangesAsync.plantuml)
+
+> Hinweis:  
+> Alle angefuerten Methoden sind mit ***virtual*** spezifiziert und koennen in der Unterklasse angepasst (ueberschrieben ***override***) werden.
