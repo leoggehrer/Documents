@@ -1,0 +1,71 @@
+@startuml DeleteAsync
+skinparam {
+    monochrome false
+    sequenceArrowThickness 2
+    maxmessagesize 60
+}
+
+title Ablauf Delete-Operation
+
+'deklaration
+actor client
+participant "DeleteAsync\n(entity)" as Delete
+participant "Check-\nAuthorizationAsync\n(type, actionName)" as checkauth
+participant "Execute-\nDeleteAsync\n(entity)" as execute
+participant "EntitySet.FindAsync(id)" as findby
+participant "ValidateEntity\n(actionType, entity)" as validate
+participant "Before-\nActionExecute\n(actionType, entity)" as beforeaction
+participant "Before-\nExecuteDelete\n(entity)" as beforeDelete
+participant "EntitySet\n.Remove\n(entity)" as remove
+participant "After-\nExecuteDelete\n(entity)" as afterDelete
+participant "After-\nActionExecute\n(actionType, entity)" as afteraction
+'declaration
+
+client -> Delete : entity
+activate Delete
+alt if (ACCOUNT_ON)
+    Delete -> checkauth : type, "DeleteAsync", id
+    activate checkauth
+    note right: Optional: Aufruf nur wenn ACCOUNT_ON ist
+    return
+end
+Delete -> execute : entity
+activate execute
+
+'Beginn: Ablauf ExecuteDelete(...)
+execute -> findby: id
+activate findby
+return entity
+alt if (entity != null)
+    execute -> validate : Delete, entity
+    activate validate
+    return
+
+    execute -> beforeaction : Delete, entity
+    activate beforeaction
+    return
+
+    execute -> beforeDelete : entity
+    activate beforeDelete
+    return
+
+    execute -> remove : entity
+    activate remove
+    return
+
+    execute -> afterDelete : entity
+    activate afterDelete
+    return
+
+    execute -> afteraction : Delete, entity
+    activate afteraction
+    return
+end
+
+'Ende: Ablauf ExecuteDelete(...)
+execute --> Delete
+deactivate execute
+
+Delete --> client
+deactivate Delete
+@enduml

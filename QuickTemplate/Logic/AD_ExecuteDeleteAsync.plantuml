@@ -1,0 +1,22 @@
+@startuml ExecuteDeleteAsync
+skinparam {
+    monoChrome false
+    rectangleRoundCorner 15
+    rectangleBackgroundColor #smokewithe
+}
+
+rectangle "void ExecuteDeleteAsync(int id)" { 
+    start
+    :entity = EntitySet.FindAsync(id);
+    if (entity != null) then (yes)
+        :ValidateEntity(entity);
+        :BeforeActionExecute(Delete, entity);
+        :BeforeExecuteDelete(entity);
+        :EntitySet.AddAsync(entity);
+        :AfterExecuteDelete(entity);
+        :AfterActionExecute(Delete, entity);
+    else (no)
+    endif
+    stop
+}
+@enduml

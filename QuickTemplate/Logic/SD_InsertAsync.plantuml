@@ -24,10 +24,10 @@ participant "After-\nActionExecute\n(actionType, entity)" as afteraction
 client -> Insert : entity
 activate Insert
 alt if (ACCOUNT_ON)
-Insert -> checkauth : type, "InsertAsync"
-activate checkauth
-note right: Optional: Aufruf nur wenn ACCOUNT_ON ist
-return
+    Insert -> checkauth : type, "InsertAsync"
+    activate checkauth
+    note right: Optional: Aufruf nur wenn ACCOUNT_ON ist
+    return
 end
 Insert -> execute : entity
 activate execute

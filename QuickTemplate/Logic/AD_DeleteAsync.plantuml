@@ -1,0 +1,17 @@
+@startuml DeleteAsync
+skinparam {
+    monoChrome false
+    rectangleRoundCorner 15
+    rectangleBackgroundColor #smokewithe
+}
+
+rectangle "TEntity DeleteAsync(TEntity entity)" { 
+    start
+    if (ACCOUNT_ON?) then (yes)
+        :CheckAuthorizationAsync(type, "DeleteAsync", id);
+    else (no)
+    endif
+    :ExecuteDeleteAsync(entity);
+    stop
+}
+@enduml

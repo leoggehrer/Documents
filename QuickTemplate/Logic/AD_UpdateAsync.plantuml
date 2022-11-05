@@ -8,7 +8,7 @@ skinparam {
 rectangle "TEntity UpdateAsync(TEntity entity)" { 
     start
     if (ACCOUNT_ON?) then (yes)
-        :CheckAuthorizationAsync(Update, entity);
+        :CheckAuthorizationAsync(type, "UpdateAsync");
     else (no)
     endif
     :result = ExecuteUpdateAsync(entity);

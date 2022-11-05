@@ -51,3 +51,23 @@ Im Kontroller
 
 > Hinweis:  
 > Alle angefuerten Methoden sind mit ***virtual*** spezifiziert und koennen in der Unterklasse angepasst (ueberschrieben ***override***) werden.
+
+## Delete-Operation
+
+### Sequence diagram (SD) "void DeleteAsync(int id)"
+
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/SD_DeleteAsync.plantuml)
+
+### Activity diagram (AD) "void DeleteAsync(int id)"
+
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_DeleteAsync.plantuml)
+
+> HINWEIS:
+> Ist die Direktive ***ACCOUNT_ON*** definiert, dann wird die Benutzerberechtigung geprueft.
+
+#### Activity diagram (AD) "void ExecuteDeleteAsync(int id)"
+
+![SD-InsertAsync](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_ExecuteDeleteAsync.plantuml)
+
+> Hinweis:  
+> Alle angefuerten Methoden sind mit ***virtual*** spezifiziert und koennen in der Unterklasse angepasst (ueberschrieben ***override***) werden.
