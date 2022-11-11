@@ -1,9 +1,12 @@
-# Logic-Kontroller
+# Logic-Controller
 
-Im Projekt ***Logic*** gibt es zu jeder Entitaet einen Kontroller mit der Namenskonvention *Entitaet im plural* und dem Postfix *Controller* und befinden sich im Ordner ***Controllers***. Abgeleitet werden diese Kontroller vom generischen Kontroller **GenericController\<T>**. Mit der Ableitung, vom generischen Kontroller, erben die Kontroller die Standard Operationen (CRUD...Create Read Update and Delete).  
+Im Projekt ***Logic*** gibt es zu jeder Entitaet einen Kontroller mit der Namenskonvention *Entitaet im Plural* und dem Postfix *Controller*. Diese Kontroller befinden sich in den Unterordnern von ***Controllers***. Die Unterordner ergeben sich aus der Ordnerstruktur der Entities. Befindet sich die Entitaet ***Customer*** im Ordner ***Entities/Base***, dann befindet sich der entsprechende Kontroller im Ordner ***Controllers/Base***.
 
-Die Aufgabe eines Kontrollers ist die Kontrolle des Zugriffes und die Pruefung der Dateninhalte der entsprechende Entitaet. Bevor die Entitaet in der Persistierungsschicht (Datenbank) gespeichert wird, werden .
+Aufgabe eines Kontrollers ist die Steuerung des Zugriffes und die Pruefung der Dateninhalte der entsprechende Entitaet. Bevor die Entitaet in der Persistierungsschicht (Datenbank) gespeichert wird, werden .
  kontrolliert den Zugriff auf eine Entitaet und uebernimmt die
+
+Abgeleitet werden diese Kontroller vom generischen Kontroller **GenericController\<T>**. Mit der Ableitung, vom generischen Kontroller, erben die Kontroller die Standard Operationen (CRUD...Create Read Update and Delete).  
+
 Ein Kontroller
 
  (es gibt fuer jede Entitaet einen Kontroller) befindet sich die Geschaeftslogik vom Backend. Zu jeder Entitaet gibt es einen konkreten Kontroller welcher sich vom generischen Kontroller ableitet. Zum Beispiel ist der Kontroller fuer die Entitaet **Customer**  befindet sich die Geschaeftslogik.
