@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///c:\Users\ggehr\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.5\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:////Users/ggehrer/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.6.5/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
       
       
       
@@ -261,12 +261,13 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="logic-kontroller">Logic-Kontroller</h1>
+      <h1 class="mume-header" id="logic-controller">Logic-Controller</h1>
 
-<p>Im Projekt <em><strong>Logic</strong></em> gibt es zu jeder Entitaet einen Kontroller mit der Namenskonvention <em>Entitaet im plural</em> und dem Postfix <em>Controller</em> und befinden sich im Ordner <em><strong>Controllers</strong></em>. Abgeleitet werden diese Kontroller vom generischen Kontroller <strong>GenericController&lt;T&gt;</strong>. Mit der Ableitung, vom generischen Kontroller, erben die Kontroller die Standard Operationen (CRUD...Create Read Update and Delete).</p>
-<p>Die Aufgabe eines Kontrollers ist die Kontrolle des Zugriffes und die Pruefung der Dateninhalte der entsprechende Entitaet. Bevor die Entitaet in der Persistierungsschicht (Datenbank) gespeichert wird, werden .<br>
-kontrolliert den Zugriff auf eine Entitaet und uebernimmt die<br>
-Ein Kontroller</p>
+<p>Im Projekt <em><strong>Logic</strong></em> gibt es zu jeder Entitaet einen Kontroller mit der Namenskonvention <em>Entitaet im Plural</em> und dem Postfix <em>Controller</em>. Diese Kontroller befinden sich in den Unterordnern von <em><strong>Controllers</strong></em>. Die Unterordner ergeben sich aus der Ordnerstruktur der Entities. Befindet sich die Entitaet <em><strong>Customer</strong></em> im Ordner <em><strong>Entities/Base</strong></em>, dann befindet sich der entsprechende Kontroller im Ordner <em><strong>Controllers/Base</strong></em>.</p>
+<p>Aufgabe eines Kontrollers ist die Steuerung des Zugriffes und die Pruefung der Dateninhalte der entsprechende Entitaet. Bevor die Entitaet in der Persistierungsschicht (Datenbank) gespeichert wird, werden .<br>
+kontrolliert den Zugriff auf eine Entitaet und uebernimmt die</p>
+<p>Abgeleitet werden diese Kontroller vom generischen Kontroller <strong>GenericController&lt;T&gt;</strong>. Mit der Ableitung, vom generischen Kontroller, erben die Kontroller die Standard Operationen (CRUD...Create Read Update and Delete).</p>
+<p>Ein Kontroller</p>
 <p>(es gibt fuer jede Entitaet einen Kontroller) befindet sich die Geschaeftslogik vom Backend. Zu jeder Entitaet gibt es einen konkreten Kontroller welcher sich vom generischen Kontroller ableitet. Zum Beispiel ist der Kontroller fuer die Entitaet <strong>Customer</strong>  befindet sich die Geschaeftslogik.</p>
 <h2 class="mume-header" id="kontroller">Kontroller</h2>
 
@@ -324,6 +325,25 @@ Ist die Direktive <em><strong>ACCOUNT_ON</strong></em> definiert, dann wird die 
 <h4 class="mume-header" id="activity-diagram-ad-void-executedeleteasyncint-id">Activity diagram (AD) &quot;void ExecuteDeleteAsync(int id)&quot;</h4>
 
 <p><img src="http://www.plantuml.com/plantuml/proxy?cache=no&amp;src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_ExecuteDeleteAsync.plantuml" alt="SD-InsertAsync"></p>
+<blockquote>
+<p>Hinweis:<br>
+Alle angefuerten Methoden sind mit <em><strong>virtual</strong></em> spezifiziert und koennen in der Unterklasse angepasst (ueberschrieben <em><strong>override</strong></em>) werden.</p>
+</blockquote>
+<h2 class="mume-header" id="savechanges-operation">SaveChanges-Operation</h2>
+
+<h3 class="mume-header" id="sequence-diagram-sd-int-savechangesasync">Sequence diagram (SD) &quot;int SaveChangesAsync()&quot;</h3>
+
+<p><img src="http://www.plantuml.com/plantuml/proxy?cache=no&amp;src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/SD_SaveChangesAsync.plantuml" alt="SD-InsertAsync"></p>
+<h3 class="mume-header" id="activity-diagram-ad-int-savechangesasync">Activity diagram (AD) &quot;int SaveChangesAsync()&quot;</h3>
+
+<p><img src="http://www.plantuml.com/plantuml/proxy?cache=no&amp;src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_SaveChangesAsync.plantuml" alt="SD-InsertAsync"></p>
+<blockquote>
+<p>HINWEIS:<br>
+Ist die Direktive <em><strong>ACCOUNT_ON</strong></em> definiert, dann wird die Benutzerberechtigung geprueft.</p>
+</blockquote>
+<h4 class="mume-header" id="activity-diagram-ad-int-executesavechangesasync">Activity diagram (AD) &quot;int ExecuteSaveChangesAsync()&quot;</h4>
+
+<p><img src="http://www.plantuml.com/plantuml/proxy?cache=no&amp;src=https://raw.githubusercontent.com/leoggehrer/Documents/master/QuickTemplate/Logic/AD_ExecuteSaveChangesAsync.plantuml" alt="SD-InsertAsync"></p>
 <blockquote>
 <p>Hinweis:<br>
 Alle angefuerten Methoden sind mit <em><strong>virtual</strong></em> spezifiziert und koennen in der Unterklasse angepasst (ueberschrieben <em><strong>override</strong></em>) werden.</p>
