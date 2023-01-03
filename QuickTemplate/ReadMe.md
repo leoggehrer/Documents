@@ -64,7 +64,7 @@ Dem Entwickler stehen unterschiedliche Hilfsmittel fuer die Erstellung von Proje
   
 ## Verwendung der Vorlage
   
-Nachfolgend werden die einzelnen Schritte von der Vorlage ***QuickTemplate*** bis zum konkreten Projekt ***QTMusicStoreLight*** erlaeutert. Das Projekt ist eine einfache Anwendung zur Demonstration von der Verwendung der Vorlage. Im Projekt ***QTMusicStoreLight*** werden Kuenstler (Artisten) und deren produzierten Alben verwaltet. Jedes Album hat ein Genre (Rock, Pop, Klassik usw.) zugeordnet. Ein Datenmodell ist im nachfolgendem Abschnitt definiert.  
+Nachfolgend werden die einzelnen Schritte von der Vorlage ***QuickTemplate*** bis zum konkreten Projekt ***QTMusicStore*** erlaeutert. Das Projekt ist eine einfache Anwendung zur Demonstration von der Verwendung der Vorlage. Im Projekt ***QTMusicStore*** werden Kuenstler (Artisten) und deren produzierten Alben verwaltet. Jedes Album hat ein Genre (Rock, Pop, Klassik usw.) zugeordnet. Ein Datenmodell ist im nachfolgendem Abschnitt definiert.  
 
 ## System-Erstellungs-Prozess  
   
@@ -83,14 +83,14 @@ Die nachfolgenden Abbildung zeigt den schematischen Erstellungs-Prozess fuer ein
   
 ![Create domain project overview](CreateProjectOverview.png)  
   
-Als Ausgangsbasis wird die Vorlage ***QuickTemplate*** verwendet. Diese Vorlage wird mit Hilfe dem Hilfsprogramm ***'TemplateTools.ConApp'*** in ein Verzeichnis eigener Wahl kopiert. Bei der Erstellung des Domain-Projektes **QTMusicStoreLight** werden die folgenden Aktionen ausgefuehrt:
+Als Ausgangsbasis wird die Vorlage ***QuickTemplate*** verwendet. Diese Vorlage wird mit Hilfe dem Hilfsprogramm ***'TemplateTools.ConApp'*** in ein Verzeichnis eigener Wahl kopiert. Bei der Erstellung des Domain-Projektes **QTMusicStore** werden die folgenden Aktionen ausgefuehrt:
 
 - Alle Projektteile aus der Vorlage werden in das Zielverzeichnis kopiert.
 - Die Namen der Projekte und Komponenten werden entsprechend angepasst.
 - Alle Projekte mit dem Prefix **QuickTemplate** werden mit dem domainspezifischen Namen erstezt.
 - Beim Kopieren der Dateien wird der Label **@BaseCode** mit dem Label **@CodeCopy** ersetzt (Diese Labels werden fur einen späteren Abgleich-Prozess verwendet).
 
-Nachfolgend wird die Erstellung des Beispiel-Projektes **QTMusicStoreLight**  mit dem Werkzeug **TemplateTools.ConApp** demonstriert:
+Nachfolgend wird die Erstellung des Beispiel-Projektes **QTMusicStore**  mit dem Werkzeug **TemplateTools.ConApp** demonstriert:
   
 ```csharp
 Template Tools
@@ -132,7 +132,7 @@ Template Copier
 ===============
 
 Copy 'QuickTemplate' from: /Users/ggehrer/Projects/CSMacTemplate/QuickTemplate
-Copy to 'QTMusicStoreLight':   /Users/ggehrer/Projects/Sample/QTMusicStoreLight
+Copy to 'QTMusicStore':   /Users/ggehrer/Projects/Sample/QTMusicStore
 
 [1] Change source path
 [2] Change target path
@@ -145,16 +145,16 @@ Choose: 4
 
 **Hinweis:** Die Vorlage muss in einem Ordner mit dem Namen **QuickTemplate** gespeichert sein.  
   
-Nach der Ausfuehren der Option ***'[4] Start copy process'*** befindet sich folgende Projektstruktur im Ordner **...\QTMusicStoreLight**:  
+Nach der Ausfuehren der Option ***'[4] Start copy process'*** befindet sich folgende Projektstruktur im Ordner **...\QTMusicStore**:  
   
 - CommonBase  
-- QTMusicStoreLight.AppLogic
-- QTMusicStoreLight.AspMvc
-- QTMusicStoreLight.CodeGenApp
-- QTMusicStoreLight.ConApp
-- QTMusicStoreLight.Logic.UnitTest
-- QTMusicStoreLight.WebApi
-- QTMusicStoreLight.WpfApp
+- QTMusicStore.AppLogic
+- QTMusicStore.AspMvc
+- QTMusicStore.CodeGenApp
+- QTMusicStore.ConApp
+- QTMusicStore.Logic.UnitTest
+- QTMusicStore.WebApi
+- QTMusicStore.WpfApp
 - TemplateCodeGeneration.AppLogic
 - TemplateTools.ConApp
   
@@ -198,14 +198,14 @@ Balance label(s):
 Source: /Users/ggehrer/Projects/CSMacTemplate/QuickTemplate
 
 [ +] Add path: ADD...
-[ 1] Balancing for: /Users/ggehrer/Projects/Sample/QTMusicStoreLight
+[ 1] Balancing for: /Users/ggehrer/Projects/Sample/QTMusicStore
 [ a] Balancing for: ALL...
 [x|X...Quit]: 
 
 Choose [n|n,n|x|X]: 1
 ```  
   
-Wird nun die Option **[1 oder a]** aktiviert, dann werden alle Dateien in der Solution **QuickTemplate** mit der Kennzeichnung `@BaseCopy` mit den Dateien in der Solution  **QTMusicStoreLight** mit der Kennzeichnung `@CodeCopy` abgeglichen.  
+Wird nun die Option **[1 oder a]** aktiviert, dann werden alle Dateien in der Solution **QuickTemplate** mit der Kennzeichnung `@BaseCopy` mit den Dateien in der Solution  **QTMusicStore** mit der Kennzeichnung `@CodeCopy` abgeglichen.  
   
 ## Setzen von Preprozessor-Defines  
 
@@ -236,7 +236,7 @@ Define-Values:
 --------------
 ACCOUNT_OFF ACCESSRULES_OFF LOGGING_OFF REVISION_OFF DBOPERATION_ON ROWVERSION_OFF GUID_OFF CREATED_OFF MODIFIED_OFF CREATEDBY_OFF MODIFIEDBY_OFF IDINT_ON IDLONG_OFF IDGUID_OFF SQLSERVER_OFF SQLITE_ON GENERATEDCODE_ON 
 
-Set define-values 'QuickTemplate' from: /Users/ggehrer/Projects/Sample/QTMusicStoreLight
+Set define-values 'QuickTemplate' from: /Users/ggehrer/Projects/Sample/QTMusicStore
 
 [1 ] Change source path
 [2 ] Set definition ACCOUNT_OFF          ==> ACCOUNT_ON
@@ -286,7 +286,7 @@ Mit der entsprechenden Auswahl koennen die Module bzw. Funktionen ein.- und ausg
 
 ## Umsetzungsschritte  
   
-Nachdem nun das Domain-Projekt **QTMusicStoreLight** erstellt wurde, werden nun folgende Schritte der Reihe nach ausgefuehrt:  
+Nachdem nun das Domain-Projekt **QTMusicStore** erstellt wurde, werden nun folgende Schritte der Reihe nach ausgefuehrt:  
   
 ### Erstellen des Backend-Systems
   
@@ -305,7 +305,7 @@ Nachdem nun das Domain-Projekt **QTMusicStoreLight** erstellt wurde, werden nun 
   - *add-migration InitDb*  
   - *update-database*  
 - Implementierung der ***Business-Logic***  
-- Erstellen des UnitTest-Projekt mit der Bezeichnung ***QTMusicStoreLight.Logic.UnitTest***  
+- Erstellen des UnitTest-Projekt mit der Bezeichnung ***QTMusicStore.Logic.UnitTest***  
   - Ueberpruefen der Geschaeftslogik mit ***UnitTests***  
 - Importieren von Daten (optional)  
   
@@ -331,6 +331,6 @@ Um die Funktionen im Backend anderen (heterogenen) System zur Verfuegung zu stel
 - Erstellen der Kontroller  
   - ...  
   
-Die einzelnen Schritte sind im [Github-QTMusicStoreLight](https://github.com/leoggehrer/CSSoftwareEngineering-QTMusicStoreLight) detailiert aufgefuehrt.  
+Die einzelnen Schritte sind im [Github-QTMusicStore](https://github.com/leoggehrer/Sample-QTMusicStore) detailiert aufgefuehrt.  
   
 **Viel Spaß beim Umsetzen der Aufgabe!**  
