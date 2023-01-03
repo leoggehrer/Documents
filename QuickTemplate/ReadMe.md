@@ -15,7 +15,10 @@ Das Projekt ***QuickTemplate*** ist eine Vorlage fuer die Erstellung von datenze
     - [Projekterstellung](#projekterstellung)
   - [Abgleich mit dem QuickTemplate](#abgleich-mit-dem-quicktemplate)
   - [Setzen von Preprozessor-Defines](#setzen-von-preprozessor-defines)
-- [Umsetzungsschritte](#umsetzungsschritte)
+  - [Umsetzungsschritte](#umsetzungsschritte)
+    - [Erstellen des Backend-Systems](#erstellen-des-backend-systems)
+    - [Erstellen der AspMvc-Anwendung](#erstellen-der-aspmvc-anwendung)
+    - [Erstellen des RESTful-Services](#erstellen-des-restful-services)
   
 ## Infrastruktur  
   
@@ -206,42 +209,86 @@ Wird nun die Option **[1 oder a]** aktiviert, dann werden alle Dateien in der So
   
 ## Setzen von Preprozessor-Defines  
 
-Im Projekt ***QuickTemplate*** sind Preprozessor-Definitions definiert. Mit Hilfe dieser Definitions können Module und Funktionen  eingeschaltet bzw. ausgeschaltet werden. Diese *Definitions* werden natuerlich beim Kopieren in das Domain-Projekt uebernommen. Die folgende Tabelle bietet eine Uebersicht ueber die Module und Funktionen:
+Im Projekt ***QuickTemplate*** sind Preprozessor-Definitions definiert. Mit Hilfe dieser Definitions können Module und Funktionen  eingeschaltet bzw. ausgeschaltet werden. Diese *Definitions* werden natuerlich beim Kopieren in das Domain-Projekt uebernommen. Mit dem Werkzeugt **Preprocessor** koennen diese Definitionen ein.- bzw. ausgeschaltet werden. Das Programm kann ebenfalls ueber das Programm **TemplateTools.ConApp** aktiviert werden.
 
-| Preprozessor-Definition | Modul/Funktion | Abhaengigkeit | Beschreibung |
-|-------------------------|----------------|---------------|--------------|
-|ACCOUNT_ON               | Authentifizierung| kein | Der Zugriff auf das System ist nur mit einen Konto gestattet. |
-|LOGGING_ON               | Logging | ACCOUNT_ON | Die Manipultion der Daten wird mitprotokolliert. |
-|REVISION_ON              | Historie | ACCOUNT_ON | Die Daten werden zusaetzlich in einer Historie verwaltet. |
-|DEVELOP_ON               | Developer Mode | DEBUG | Zusaetzliche Funktionen wie Datenbank-Loeschen und Datenbank-Erstellen sind freigeschaltet. |  
+```csharp
+Template Tools
+==============
 
-```text  
+Choose a tool:
+
+[1] Copier..........Copy a quick template to a project
+[2] Preprocessor....Setting defines for project options
+[3] CodeGenerator...Generate code for template solutions
+[4] Comparison......compares a project with the template and compares it
+[x|X] Exit
+
+Choose: 2
+```
+
+Nach der Bestaetigung der Auswahl erscheint die folgende Bildschirmmaske:
+
+```csharp
 Template Preprocessor
 =====================
 
-Definition-Values: ACCOUNT_OFF LOGGING_OFF REVISION_OFF DEVELOP_OFF
+Define-Values:
+--------------
+ACCOUNT_OFF ACCESSRULES_OFF LOGGING_OFF REVISION_OFF DBOPERATION_ON ROWVERSION_OFF GUID_OFF CREATED_OFF MODIFIED_OFF CREATEDBY_OFF MODIFIEDBY_OFF IDINT_ON IDLONG_OFF IDGUID_OFF SQLSERVER_OFF SQLITE_ON GENERATEDCODE_ON 
 
-Set definition-values in 'QuickTemplate' from: ...\source\repos\HtlLeo\CSSoftwareEngineering\QuickTemplate
+Set define-values 'QuickTemplate' from: /Users/ggehrer/Projects/Sample/QTMusicStoreLight
 
-[1] Change source path
-[2] Set definition ACCOUNT_ON
-[3] Set definition LOGGING_ON
-[4] Set definition REVISION_ON
-[5] Set definition DEVELOP_ON
-[6] Start assignment process...
+[1 ] Change source path
+[2 ] Set definition ACCOUNT_OFF          ==> ACCOUNT_ON
+[3 ] Set definition ACCESSRULES_OFF      ==> ACCESSRULES_ON
+[4 ] Set definition LOGGING_OFF          ==> LOGGING_ON
+[5 ] Set definition REVISION_OFF         ==> REVISION_ON
+[6 ] Set definition DBOPERATION_ON       ==> DBOPERATION_OFF
+[7 ] Set definition ROWVERSION_OFF       ==> ROWVERSION_ON
+[8 ] Set definition GUID_OFF             ==> GUID_ON
+[9 ] Set definition CREATED_OFF          ==> CREATED_ON
+[10] Set definition MODIFIED_OFF         ==> MODIFIED_ON
+[11] Set definition CREATEDBY_OFF        ==> CREATEDBY_ON
+[12] Set definition MODIFIEDBY_OFF       ==> MODIFIEDBY_ON
+[13] Set definition IDINT_ON             ==> IDINT_OFF
+[14] Set definition IDLONG_OFF           ==> IDLONG_ON
+[15] Set definition IDGUID_OFF           ==> IDGUID_ON
+[16] Set definition SQLSERVER_OFF        ==> SQLSERVER_ON
+[17] Set definition SQLITE_ON            ==> SQLITE_OFF
+[18] Set definition GENERATEDCODE_ON     ==> GENERATEDCODE_OFF
+[19] Start assignment process...
 [x|X] Exit
 
-Choose:
+Choose [n|n,n|x|X]: 
+```
 
-```  
+Mit der entsprechenden Auswahl koennen die Module bzw. Funktionen ein.- und ausgeschaltet werden. Die folgende Tabelle bietet eine Uebersicht ueber die Module und Funktionen:
 
-Wird eine Option **[2..6]** aktiviert, dann werden die Definitions fuer das ausgewaehlten Projekt gesetzt. Mit der Option **[1]** kann der entsprechende Pfad auf das Projekt geaendert werden.
+| Preprozessor-Definition | Modul/Funktion | Abhaengigkeit | Beschreibung |
+|-------------------------|----------------|---------------|--------------|
+| ACCOUNT_ON | Authentifizierung | keine | Aktiviert das rollenbasierte Zugriffssystem. Das bedeuted, dass ein Zugriff auf das System nur mit einem gueltigem Konto gestattet ist. <br>**Rolle:**<br>Eine Rolle wird dem Konto zugeordnet und mit dieser Rolle sind unterschiedliche Operationen moeglich. Zum Beispiel kann mit der Rolle **SysAdmin** ein weiteres Konto erstellt und bearbeitet werden. Naehere Details erfolgen in einem spaeteren Abschnitt.|
+| ACCESSRULES_ON | Autorisierung | ACCOUNT_ON | Aktiviert die datengesteuerte Zugriffskontrolle. Zum Beispiel darf der Datensatz mit der Id=4711 nur mit der Rolle **DataManager** geloescht werden. Naehere Details erfolgen in einem spaeteren Abschnitt. |
+| LOGGING_ON               | Logging | ACCOUNT_ON | Die Manipulation der Daten wird protokolliert. Zum Beispiel: Mit welchem Konto und Zeitpunkt sind Datensaetze erstellt bzw. geaendert worden. |
+|REVISION_ON | Historie | ACCOUNT_ON | Die Daten werden zusaetzlich in einer Historie verwaltet. Aenderungen in der Vergangenheit werden aufgezeichnet. |
+| DBOPERATION_ON | Datenbank | keine | Schaltet die programmgesteuerten Operationen wie Loeschen, Erstellen, Migration usw. ein. **Vorsicht:** Wenn diese Option eingeschaltet ist, dann kann mit dem **DbManager** die Datenbank geloescht werden!  |
+| ROWVERSION_ON | Optimistic Concurrency | keine | Kontrolliert den parallelen Zugriff von mehreren Benutzer auf denselben Datansatz. Manche Datenbanken (z.B.: SQLite) bieten keine Unterstuetzung und daher muss diese Eigenschaft ausgeschaltet werden. |  
+| GUID_ON | Spalte Guid | keine | Aktiviert fuer eine Entitaet eine zusaetzliche Identitaetseigenschaft. Diese Eigenschaft wird vom System verwaltet. |
+| CREATED_ON | Erstellung | ACCOUNT_ON | Aktiviert fuer eine Entitaet eine zusaetzliche Eigenschaft fuer den Erstellungszeitpunk. Diese Eigenschaft wird vom System verwaltet. |
+| MODIFIED_ON | Aenderung | ACCOUNT_ON | Aktiviert fuer eine Entitaet eine zusaetzliche Eigenschaft fuer den letzten Aenderungszeitpunkt. Diese Eigenschaft wird vom System verwaltet. |
+| CREATEDBY_ON | Erstellung-Konto | ACCOUNT_ON | Aktiviert fuer eine Entitaet eine zusaetzliche Navigationseigenschaft zum Ersteller-Konto. Diese Eigenschaft wird vom System verwaltet. |
+| MODIFIEDBY_ON | Aenderung | ACCOUNT_ON | Aktiviert fuer eine Entitaet eine zusaetzliche Navigationseigenschaft zum letzten Aenderungs-Konto. Diese Eigenschaft wird vom System verwaltet. |
+| IDINT_ON | IdType=int | keine | Definiert den Datentyp fuer die Identitaet einer Entitaet mit dem Datentyp **int**. Die anderen Optionen werden automatisch ausgeschaltet. |
+| IDLONG_ON | IdType=long | keine | Definiert den Datentyp fuer die Identitaet einer Entitaet mit dem Datentyp **long**. Die anderen Optionen werden automatisch ausgeschaltet. |
+| IDGUID_ON | IdType=Guid | keine | Definiert den Datentyp fuer die Identitaet einer Entitaet mit dem Datentyp **Guid**. Die anderen Optionen werden automatisch ausgeschaltet. |
+| SQLSERVER_ON | Datenbank | keine | Definiert die Verwendung der Datenbank **MSSQL-SERVER**. Die anderen Optionen werden automatisch ausgeschaltet. |
+| SQLITE_ON | Datenbank | keine | Definiert die Verwendung der Datenbank **SQLite**. Die anderen Optionen werden automatisch ausgeschaltet. |
+| GENERATEDCODE_ON | Code-Generierung | keine | Diese Definition zeigt an, dass fuer dieses Projekt die Code-Generierung ausgefuehrt wurde. Wenn die Funktion **Delete generation files** ausgefuehrt wurde, dann ist diese Definition wieder ausgeschaltet. Naehere Details erfolgen in einem spaeteren Abschnitt. |
 
-# Umsetzungsschritte  
+## Umsetzungsschritte  
   
-Nachdem nun das Domain-Projekt **QTMusicStoreLight** erstellt wurde, werden nun folgende Schritte der Reihenfolge nach ausgefuehrt:  
+Nachdem nun das Domain-Projekt **QTMusicStoreLight** erstellt wurde, werden nun folgende Schritte der Reihe nach ausgefuehrt:  
   
-**Erstellen des Backend-Systems**  
+### Erstellen des Backend-Systems
   
 - Erstellen der ***Enumeration***  
   - ...  
@@ -262,9 +309,9 @@ Nachdem nun das Domain-Projekt **QTMusicStoreLight** erstellt wurde, werden nun 
   - Ueberpruefen der Geschaeftslogik mit ***UnitTests***  
 - Importieren von Daten (optional)  
   
-**Erstellen der AspMvc-Anwendung**  
+### Erstellen der AspMvc-Anwendung
 
-Mit wenigen Schritte kann fuer das *Backend* eine AspMvc Web-Anwendung, fuer die Verwaltung und Bearbeitung von Daten, erstellt werden. Zu diesem Zweck sind die Schritte der Reihe nach auszufuehren:  
+Mit wenigen Schritte kann fuer das *Backend* eine AspMvc Web-Anwendung, fuer die Verwaltung und Bearbeitung von Daten, erstellt werden. Die Vorlage dazu befindet sich bereit in der Solution. Zu diesem Zweck sind die Schritte der Reihe nach auszufuehren:  
 
 - Erstellen der Models  
   - ...  
@@ -273,11 +320,11 @@ Mit wenigen Schritte kann fuer das *Backend* eine AspMvc Web-Anwendung, fuer die
 - Erstellen der Ansichten  
   - ...  
 
-> HINWEIS: Fuer die Erstellung der Ansichten (Views) koennen auch die bereitgestellten Standard-Ansichten (im Ordner /Views/Shared) verwendet werden. Eine Anleitung zur Verwendung dieser Ansichten befinden sich im Solution-Ordner *'Solution items'* mit dem Namen *'AspMvcDefaultViews.md'*.
+> HINWEIS: Fuer die Erstellung der Ansichten (Views) koennen auch die bereitgestellten Standard-Ansichten (im Ordner /Views/Shared) verwendet werden. Eine Anleitung zur Verwendung dieser Ansichten befindet sich im Dokument mit dem Namen *'AspMvcDefaultViews.md'*.
 
-**Erstellen des RESTful-Services**  
+### Erstellen des RESTful-Services
   
-Um die Funktionen im Backend anderen (heterogenen) System zur Verfuegung zu stellen, ist es sinnvoll, dass diese Funktionalitaet ueber RESTful-Services delegiert werden.
+Um die Funktionen im Backend anderen (heterogenen) System zur Verfuegung zu stellen, ist es sinnvoll, dass diese Funktionalitaet ueber RESTful-Services delegiert werden. Fuer die Bereitstellung sind die folgenden Schritte notwendig:
 
 - Erstellen der Models  
   - ...  
